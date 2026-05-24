@@ -7,7 +7,6 @@ import UIKit
 
 - (BOOL)application:(UIApplication *)application
     didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-  // [GMSServices provideAPIKey:@"AIzaSyApRb7Vn_cAehrpMLhQVSmdoikIu3Iy2lU"];
   [GeneratedPluginRegistrant registerWithRegistry:self];
   return [super application:application didFinishLaunchingWithOptions:launchOptions];
 }
