@@ -1,0 +1,29 @@
+.venv/
+.docs/
+.vscode/
+.env.example
+.docs/
+.idea/
+.aparna/docs/
+.env
+
+# Test files
+aparna-backend/test/unit/
+Aparna/aparna/test/unit_test.dart
+generate_test_plan.js
+
+# Word / Office temp files
+# Word / Office temp files
+~$*.docx
+~$*.xlsx
+~$*.pptx~$*.docx
+~$*.xlsx
+~$*.pptx
+
+# Node modules (root level)
+node_modules/
+package.json
+package-lock.json
+
+# Claude memory
+.claude/

@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "124485235213",
+    "project_id": "aparna-notification",
+    "storage_bucket": "aparna-notification.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:124485235213:android:6097a78b0ca6e0dff65b44",
+        "android_client_info": {
+          "package_name": "com.example.aparna"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "124485235213-pp3vgi4nf4lvrsviv0jtkgq0njs34jg9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.aparna",
+            "certificate_hash": "8f43c64b2af4589f52fa297b3c022462d88df93e"
+          }
+        },
+        {
+          "client_id": "124485235213-b9h9a11025htn0gsfqkmh001683qhmus.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAoQn0mut4AxdcClYoiWbZl6UCeRv8g2Gw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "124485235213-b9h9a11025htn0gsfqkmh001683qhmus.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "124485235213-vge9dtm808ggr45houh7jpv31r4hc9qq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "Aparna.com"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
