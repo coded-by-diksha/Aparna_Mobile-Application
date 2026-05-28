@@ -6,6 +6,7 @@ import '../bloc/auth/auth_bloc.dart';
 import '../bloc/auth/auth_event.dart';
 import '../bloc/auth/auth_state.dart';
 import '../../core/di/dependency_injection.dart';
+import '../../core/constant/apiConstant.dart';
 import '../../main.dart'; // Import AppTheme from main.dart
 import 'admin/admin_dashboard.dart';
 import 'forget_password.dart';
@@ -455,7 +456,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                   borderRadius: BorderRadius.circular(4),
                 ),
                 child: Image.network(
-                  'https://developers.google.com/identity/images/g-logo.png',
+                  ApiConstant.googleLogoUrl,
                   height: iconSize,
                   width: iconSize,
                   errorBuilder: (context, error, stackTrace) =>

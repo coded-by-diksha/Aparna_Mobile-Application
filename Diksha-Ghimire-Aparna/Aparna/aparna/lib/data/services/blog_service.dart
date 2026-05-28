@@ -9,7 +9,7 @@ import '../../core/network/auth_http_client.dart';
 import '../models/blog_model.dart';
 
 class BlogService {
-  static const String baseUrl = '${ApiConstant.baseUrl}blogs';
+  static final String baseUrl = '${ApiConstant.baseUrl}blogs';
 
   Future<List<Blog>> fetchBlogs() async {
     final token = await AuthService.getToken();

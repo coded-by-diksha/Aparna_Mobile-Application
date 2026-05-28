@@ -5,7 +5,7 @@ import 'package:aparna/core/network/auth_http_client.dart';
 
 /// Service to sync FCM token with backend
 class FCMTokenSyncService {
-  static const String baseUrl = ApiConstant.baseUrl;
+  static final String baseUrl = ApiConstant.baseUrl;
   
   /// for sending FCM token to backend after user login
   static Future<bool> syncTokenWithBackend(String userId, {String? authToken}) async {

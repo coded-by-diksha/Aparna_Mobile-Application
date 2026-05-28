@@ -4,7 +4,7 @@ import '../../core/constant/apiConstant.dart';
 import '../../core/network/auth_http_client.dart';
 
 class AuthRemoteDataSource {
-  static const String baseUrl = ApiConstant.baseUrl;
+  static final String baseUrl = ApiConstant.baseUrl;
   static const Duration _defaultRequestTimeout = Duration(seconds: 30);
   static const Duration _googleLoginTimeout = Duration(seconds: 75);
 
@@ -304,8 +304,6 @@ class AuthRemoteDataSource {
       ).timeout(const Duration(seconds: 60));
       
       print('Response status code: ${response.statusCode}');
-      print('Response headers: ${response.headers}');
-      print('Response body: ${response.body}');
       
       if (response.body.isEmpty) {
         return {
@@ -370,7 +368,6 @@ class AuthRemoteDataSource {
       ).timeout(const Duration(seconds: 60));
       
       print('Response status code: ${response.statusCode}');
-      print('Response body: ${response.body}');
       
       if (response.body.isEmpty) {
         return {
@@ -425,7 +422,6 @@ class AuthRemoteDataSource {
       ).timeout(const Duration(seconds: 60));
       
       print('Response status code: ${response.statusCode}');
-      print('Response body: ${response.body}');
       
       if (response.body.isEmpty) {
         return {
@@ -531,7 +527,6 @@ class AuthRemoteDataSource {
       ).timeout(const Duration(seconds: 60));
       
       print('Response status code: ${response.statusCode}');
-      print('Response body: ${response.body}');
       
       if (response.body.isEmpty) {
         return {

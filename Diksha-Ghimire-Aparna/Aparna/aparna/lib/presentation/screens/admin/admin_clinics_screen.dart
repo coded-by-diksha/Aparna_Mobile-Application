@@ -639,7 +639,7 @@ class _AdminClinicsScreenState extends State<AdminClinicsScreen> {
     // 2. Fallback: OpenStreetMap Nominatim (works on all platforms, no API key)
     try {
       final uri = Uri.parse(
-        'https://nominatim.openstreetmap.org/reverse?lat=$latitude&lon=$longitude&format=json',
+        '${ApiConstant.nominatimReverseBaseUrl}?lat=$latitude&lon=$longitude&format=json',
       );
       final response = await http.get(
         uri,

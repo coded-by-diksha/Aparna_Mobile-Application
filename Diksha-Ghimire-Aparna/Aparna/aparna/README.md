@@ -21,3 +21,17 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+## URL configuration (.env)
+
+All service URLs are loaded from `.env` now.
+
+Required keys:
+- REMOTE_BASE_URL
+- LOCAL_BASE_URL
+- OSRM_ROUTING_BASE_URL
+- OSM_TILE_URL_TEMPLATE
+- NOMINATIM_REVERSE_BASE_URL
+- GOOGLE_LOGO_URL
+
+If any key is missing, the app will throw a startup/config error.

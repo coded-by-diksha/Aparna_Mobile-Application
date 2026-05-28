@@ -104,8 +104,7 @@ class ExpertHelpRepositoryImpl implements ExpertHelpRepository {
     try {
       // OSRM expects lon,lat order in URL
       final url = Uri.parse(
-        'https://router.project-osrm.org/route/v1/driving/'
-        '${fromLng},$fromLat;${toLng},$toLat'
+        '${ApiConstant.osrmRoutingBaseUrl}${fromLng},$fromLat;${toLng},$toLat'
         '?overview=full&geometries=geojson',
       );
       final response = await http.get(url).timeout(

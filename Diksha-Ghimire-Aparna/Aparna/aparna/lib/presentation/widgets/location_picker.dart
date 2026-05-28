@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:geolocator/geolocator.dart';
+import '../../core/constant/apiConstant.dart';
 import '../../main.dart'; // For AppTheme
 
 class LocationPicker extends StatefulWidget {
@@ -100,7 +101,7 @@ class _LocationPickerState extends State<LocationPicker> {
             ),
             children: [
               TileLayer(
-                urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                urlTemplate: ApiConstant.openStreetMapTileUrlTemplate,
                 userAgentPackageName: 'com.example.aparna',
               ),
               MarkerLayer(

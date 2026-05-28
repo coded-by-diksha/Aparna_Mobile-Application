@@ -128,7 +128,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
     print('Loading profile - Token: ${token.isNotEmpty ? "Present" : "Missing"}');
     print('Loading profile - UserId: $userId');
-    print('Loading profile - User Profile: ${authRepo.userProfile}');
 
     if (userId != null) {
       context.read<ProfileBloc>().add(

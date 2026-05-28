@@ -3,7 +3,7 @@ import '../../core/constant/apiConstant.dart';
 import '../../core/network/auth_http_client.dart';
 
 class AdminService {
-  static const String baseUrl = '${ApiConstant.baseUrl}admin';
+  static final String baseUrl = '${ApiConstant.baseUrl}admin';
 
   Future<Map<String, dynamic>> fetchStats() async {
     try {
@@ -88,14 +88,11 @@ class AdminService {
       ).timeout(const Duration(seconds: 15));
 
       print('DEBUG: Delete blog response status: ${response.statusCode}');
-      print('DEBUG: Delete blog response body: ${response.body}');
 
       if (response.statusCode == 200 || response.statusCode == 204) {
         return;
       } else {
-        final errorBody = response.body;
-        print('Error deleting blog: ${response.statusCode} - $errorBody');
-        throw Exception('Failed to delete blog: ${response.statusCode} - $errorBody');
+        throw Exception('Failed to delete blog (code ${response.statusCode})');
       }
     } catch (e) {
       print('Exception in deleteBlog: $e');

@@ -75,7 +75,7 @@ class _ExpertHelpViewState extends State<ExpertHelpView> {
                   ),
                   children: [
                     TileLayer(
-                      urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                      urlTemplate: ApiConstant.openStreetMapTileUrlTemplate,
                       userAgentPackageName: 'com.example.aparna', // Recommended by OSM policy
                     ),
                     // Line following streets from user to selected clinic (or straight line fallback)

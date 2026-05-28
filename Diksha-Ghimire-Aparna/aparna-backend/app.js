@@ -189,8 +189,7 @@ const { startScheduledJobs } = require('./utils/scheduler');
 
 
 app.listen(PORT, '0.0.0.0', () => {
-  const ip = getLocalIP();
-  console.log(`Server is running on http://${ip}:${PORT}/`);
+  console.log(`Server is running on http://localhost:${PORT}/`);
   (async () => {
     await verifyDatabaseConnection({ retries: 3, delayMs: 2500 });
     startScheduledJobs();

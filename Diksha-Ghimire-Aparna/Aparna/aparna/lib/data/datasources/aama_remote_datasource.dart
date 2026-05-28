@@ -29,9 +29,7 @@ class AamaRemoteDataSource {
         }),
         requiresAuth: token.isNotEmpty,
       );
-log(  response.statusCode.toString());
-      log('Response body: ${response.body}');
-      log('user id: ${json.decode(response.body)['user_id']}');
+      log(response.statusCode.toString());
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
@@ -60,10 +58,6 @@ log(  response.statusCode.toString());
 
   Future<String> getGreeting(String userName, String token, {String language = 'en'}) async {
     try {
-      print('Getting greeting for: $userName, language: $language');
-      print('Token: ${token.isNotEmpty ? "Present (${token.substring(0, 20)}...)" : "MISSING"}');
-      print('URL: ${baseUrl}aama/greeting');
-      
       final headers = {
         'Content-Type': 'application/json',
       };
@@ -84,7 +78,6 @@ log(  response.statusCode.toString());
       );
       
       print('Greeting response status: ${response.statusCode}');
-      print('Greeting response body: ${response.body}');
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
@@ -122,7 +115,6 @@ log(  response.statusCode.toString());
         requiresAuth: token.isNotEmpty,
       );
       log('Store chat response status: ${httpResponse.statusCode}');
-      log('Store chat response body: ${httpResponse.body}');
 
       if (httpResponse.statusCode == 200) {
         final data = json.decode(httpResponse.body);

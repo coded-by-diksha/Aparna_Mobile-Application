@@ -4,7 +4,7 @@ import '../../core/network/auth_http_client.dart';
 import '../models/story_model.dart';
 
 class StoryService {
-  static const String baseUrl = '${ApiConstant.baseUrl}blogs/stories';
+  static final String baseUrl = '${ApiConstant.baseUrl}blogs/stories';
 
   Future<List<UserStory>> fetchStories() async {
     final response = await AuthHttpClient.instance.get(

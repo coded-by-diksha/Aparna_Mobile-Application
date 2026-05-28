@@ -172,6 +172,21 @@ class _HomepageState extends State<Homepage> {
     }
   }
 
+  bool _isSameDate(DateTime a, DateTime b) {
+    return a.year == b.year && a.month == b.month && a.day == b.day;
+  }
+
+  bool _isCurrentlyMenstruating(PeriodTrackingState state) {
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+
+    final hasActivePeriodInState =
+        state.periodSwitchValue && state.periodDays.any((d) => _isSameDate(d, today));
+    final hasActivePeriodInHistory = _historyDays.any((d) => _isSameDate(d, today));
+
+    return hasActivePeriodInState || hasActivePeriodInHistory;
+  }
+
   /// Responsive text scale: smaller on narrow screens so full text fits
   double _textScale(BuildContext context) {
     final w = MediaQuery.sizeOf(context).width;
@@ -199,6 +214,7 @@ class _HomepageState extends State<Homepage> {
       child: ResponsiveWrapper(
         child: BlocBuilder<PeriodTrackingBloc, PeriodTrackingState>(
           builder: (context, state) {
+            final isCurrentlyMenstruating = _isCurrentlyMenstruating(state);
             return Scaffold(
               backgroundColor: const Color(0xFFFAFAFA),
               appBar: AppBar(
@@ -308,8 +324,10 @@ class _HomepageState extends State<Homepage> {
                       ] else ...[
                         _buildWelcomeSection(context, widget.userName, l10n),
                         const SizedBox(height: 32),
-                        _buildFeltSomethingCard(context),
-                        const SizedBox(height: 32),
+                        if (isCurrentlyMenstruating) ...[
+                          _buildFeltSomethingCard(context, isCurrentlyMenstruating),
+                          const SizedBox(height: 32),
+                        ],
                         _buildPeriodTrackerCard(context, state, l10n, textScale),
                         const SizedBox(height: 32),
                         _buildCalendarSection(context, state, textScale),
@@ -859,10 +877,10 @@ class _HomepageState extends State<Homepage> {
     );
   }
 
-  Widget _buildFeltSomethingCard(BuildContext context) {
+  Widget _buildFeltSomethingCard(BuildContext context, bool isCurrentlyMenstruating) {
     final scale = _textScale(context);
     return GestureDetector(
-      onTap: () => _showFeltSomethingDialog(context),
+      onTap: isCurrentlyMenstruating ? () => _showFeltSomethingDialog(context) : null,
       child: Container(
         padding: EdgeInsets.all((16 * scale).roundToDouble()),
         decoration: BoxDecoration(
@@ -916,6 +934,17 @@ class _HomepageState extends State<Homepage> {
   }
 
   void _showFeltSomethingDialog(BuildContext context) {
+    final state = context.read<PeriodTrackingBloc>().state;
+    if (!_isCurrentlyMenstruating(state)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Daily check-in is available only during menstruation.'),
+          backgroundColor: Colors.orange,
+        ),
+      );
+      return;
+    }
+
     final TextEditingController textController = TextEditingController();
     int selectedMood = 3;
     int selectedFlow = 0; // 0 means not recorded or no flow

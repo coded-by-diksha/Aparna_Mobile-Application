@@ -10,7 +10,6 @@ class ProfileRemoteDataSource {
 
   Future<UserModel> getUserProfile(int userId, String token) async {
     try {
-      print('Fetching profile from URL: ${baseUrl}profile/$userId');
       final response = await AuthHttpClient.instance.get(
         Uri.parse('${baseUrl}profile/$userId'),
         headers: {
@@ -18,18 +17,18 @@ class ProfileRemoteDataSource {
           'Authorization': 'Bearer $token',
         },
       );
-      print('Profile response status: ${response.statusCode}');
-      print('Profile response body: ${response.body}');
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
         if (data['success'] == true) {
           return UserModel.fromJson(data['profile']);
         } else {
-          throw Exception(data['error'] ?? 'Failed to load profile');
+          throw Exception(
+            '${data['error'] ?? 'Failed to load profile'} (code ${response.statusCode})',
+          );
         }
       } else {
-        throw Exception('Failed to load profile');
+        throw Exception('Failed to load profile (code ${response.statusCode})');
       }
     } catch (e) {
       throw Exception('Error getting profile: $e');
@@ -89,9 +88,6 @@ class ProfileRemoteDataSource {
     required String token,
   }) async {
     try {
-      print('Updating profile photo for user: $userId');
-      print('Photo path: $photoUrl');
-
       var request = await AuthHttpClient.instance.authorizedMultipartRequest(
         'PUT',
         Uri.parse('${baseUrl}profile/photo/$userId'),
@@ -120,8 +116,6 @@ class ProfileRemoteDataSource {
         }
       }
 
-      print('Sending file: $filename with content-type: $mimeType');
-
       request.files.add(await http.MultipartFile.fromPath(
         'profilephoto', 
         photoUrl,
@@ -132,15 +126,14 @@ class ProfileRemoteDataSource {
       var streamedResponse = await request.send();
       var response = await http.Response.fromStream(streamedResponse);
 
-      print('Update photo response status: ${response.statusCode}');
-      print('Update photo response body: ${response.body}');
-
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
         if (data['success'] == true) {
           return UserModel.fromJson(data['profile']);
         } else {
-          throw Exception(data['error'] ?? 'Failed to update profile photo');
+          throw Exception(
+            '${data['error'] ?? 'Failed to update profile photo'} (code ${response.statusCode})',
+          );
         }
       } else {
         String errorMessage = 'Failed to update profile photo: ${response.statusCode}';
@@ -160,7 +153,6 @@ class ProfileRemoteDataSource {
         throw Exception(errorMessage);
       }
     } catch (e) {
-      print('Exception in updateProfilePhoto: $e');
       throw Exception('Error updating profile photo: $e');
     }
   }

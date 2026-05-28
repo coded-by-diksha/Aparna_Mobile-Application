@@ -130,7 +130,6 @@ class AuthRepositoryImpl implements AuthRepository {
       _refreshToken = result['refreshToken'] ?? '';
       _userProfile['token'] = _token;
       _userProfile['refreshToken'] = _refreshToken;
-      print('[AUTH_REPO] User profile: $_userProfile');
     }
 
     return result;

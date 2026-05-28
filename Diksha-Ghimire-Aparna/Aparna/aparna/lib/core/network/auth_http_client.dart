@@ -217,9 +217,7 @@ class AuthHttpClient {
 
   /// Converts a remote URL to localhost fallback URL
   Uri _getLocalHostUri(Uri originalUri) {
-    // Replace the host/path with localhost equivalent
-    // Example: https://diksha-ghimire-aparna.onrender.com/api/users
-    // Becomes: http://192.168.100.83:4000/api/users
+    // Replace the host/path with local fallback host while preserving path/query.
     final path = originalUri.path;
     final query = originalUri.query;
 
