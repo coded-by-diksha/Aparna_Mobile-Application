@@ -1,9 +1,9 @@
 import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../di/dependency_injection.dart';
 import '../../data/services/notification_service.dart';
+import 'secure_session_service.dart';
 
 class FirebaseMessagingService {
   static final FirebaseMessaging _messaging = FirebaseMessaging.instance;
@@ -77,22 +77,20 @@ class FirebaseMessagingService {
     }
   }
 
-  /// Save the FCM token to SharedPreferences
+  /// Save the FCM token to secure storage.
   static Future<void> saveToken(String token) async {
     try {
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setString('fcm_token', token);
+      await SecureSessionService.saveFcmToken(token);
       print('FCM Token saved successfully');
     } catch (e) {
       print('Error saving FCM token: $e');
     }
   }
 
-  /// Retrieve the saved FCM token from SharedPreferences
+  /// Retrieve the saved FCM token from secure storage.
   static Future<String?> getSavedToken() async {
     try {
-      final prefs = await SharedPreferences.getInstance();
-      return prefs.getString('fcm_token');
+      return SecureSessionService.getSavedFcmToken();
     } catch (e) {
       print('Error retrieving saved FCM token: $e');
       return null;

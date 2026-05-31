@@ -2,10 +2,10 @@ import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../../data/services/notification_service.dart';
 import '../di/dependency_injection.dart';
 import 'firebase_messaging_service.dart';
+import 'secure_session_service.dart';
 
 /// Service to manage notification preferences and permissions.
 /// Handles enabling/disabling notifications with permission requests.
@@ -14,14 +14,12 @@ class NotificationPreferenceService {
 
   /// Get whether notifications are enabled (user preference).
   static Future<bool> isNotificationsEnabled() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getBool(_keyNotificationsEnabled) ?? true;
+    return SecureSessionService.getNotificationsEnabled();
   }
 
   /// Set notification preference and apply (request permission / unregister).
   static Future<bool> setNotificationsEnabled(bool enabled) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool(_keyNotificationsEnabled, enabled);
+    await SecureSessionService.saveNotificationsEnabled(enabled);
 
     if (enabled) {
       return await _enableNotifications();

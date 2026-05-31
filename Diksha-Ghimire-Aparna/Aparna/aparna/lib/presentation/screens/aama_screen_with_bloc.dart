@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../../data/repositories/auth_repository_impl.dart';
 import '../../core/di/dependency_injection.dart';
 import '../../main.dart';
@@ -10,6 +9,7 @@ import '../bloc/aama/aama_state.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:permission_handler/permission_handler.dart';
+import '../../core/services/secure_session_service.dart';
 
 class AamaScreen extends StatefulWidget {
   final String? userName;
@@ -46,8 +46,7 @@ class _AamaScreenState extends State<AamaScreen> {
   }
 
   Future<void> _checkLanguageChange() async {
-    final prefs = await SharedPreferences.getInstance();
-    final newLang = prefs.getString('language') ?? 'en';
+    final newLang = await SecureSessionService.getLanguage() ?? 'en';
     if (newLang != _language) {
       _language = newLang;
       if (widget.userName != null && widget.userName!.isNotEmpty) {
@@ -134,8 +133,7 @@ class _AamaScreenState extends State<AamaScreen> {
     _token = authRepo.getToken();
     _userId = widget.userId ?? authRepo.getUserId();
 
-    final prefs = await SharedPreferences.getInstance();
-    _language = prefs.getString('language') ?? 'en';
+    _language = await SecureSessionService.getLanguage() ?? 'en';
 
     if (!mounted) return;
 

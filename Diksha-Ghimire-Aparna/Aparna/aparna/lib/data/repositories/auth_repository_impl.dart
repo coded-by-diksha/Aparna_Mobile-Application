@@ -1,4 +1,3 @@
-import 'package:shared_preferences/shared_preferences.dart';
 import '../../domain/repositories/auth_repository.dart';
 import '../datasources/auth_remote_datasource.dart';
 import '../../core/guards/auth_guard.dart';
@@ -36,12 +35,11 @@ class AuthRepositoryImpl implements AuthRepository {
         return;
       }
 
-      final prefs = await SharedPreferences.getInstance();
       _token = await AuthService.getToken() ?? '';
       _refreshToken = await AuthService.getRefreshToken() ?? '';
-      final role = prefs.getString('user_role') ?? '';
-      final userName = prefs.getString('user_name') ?? '';
-      final userId = prefs.getInt('user_id');
+      final role = await AuthService.getUserRole() ?? '';
+      final userName = await AuthService.getUserName() ?? '';
+      final userId = await AuthService.getUserId();
       
       if (_token.isNotEmpty) {
         _isLoggedIn = true;
@@ -179,10 +177,6 @@ class AuthRepositoryImpl implements AuthRepository {
     _token = '';
     _refreshToken = '';
     await AuthService.clearSession();
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.remove('user_role');
-    await prefs.remove('user_name');
-    await prefs.remove('user_id');
   }
 
   @override

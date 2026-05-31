@@ -12,9 +12,9 @@ import '../../bloc/profile/profile_state.dart';
 import '../edit_profile_screen.dart';
 import '../../../core/di/dependency_injection.dart';
 import '../../../data/repositories/auth_repository_impl.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:aparna/core/constant/apiConstant.dart';
 import 'package:aparna/core/services/notification_preference_service.dart';
+import 'package:aparna/core/services/secure_session_service.dart';
 import 'admin_analytics_screen.dart';
 
 class AdminProfileScreen extends StatefulWidget {
@@ -505,8 +505,7 @@ class _AdminProfileScreenState extends State<AdminProfileScreen> {
       title: Text(title),
       trailing: isSelected ? const Icon(Icons.check, color: AppTheme.primaryColor) : null,
       onTap: () async {
-        final prefs = await SharedPreferences.getInstance();
-        await prefs.setString('language', code);
+        await SecureSessionService.saveLanguage(code);
         if (mounted) {
           MyApp.setLocale(context, Locale(code));
           Navigator.pop(context);

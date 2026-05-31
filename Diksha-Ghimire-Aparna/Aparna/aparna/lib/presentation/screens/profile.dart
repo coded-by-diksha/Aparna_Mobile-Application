@@ -1,7 +1,6 @@
 import 'package:aparna/presentation/screens/health_dashboard_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../../main.dart';
 import '../../core/di/dependency_injection.dart';
 import '../../core/guards/auth_guard.dart';
@@ -18,6 +17,7 @@ import 'expertHelp.dart';
 import 'package:aparna/l10n/app_localizations.dart';
 import '../../core/constant/apiConstant.dart';
 import '../../core/services/notification_preference_service.dart';
+import '../../core/services/secure_session_service.dart';
 import '../../data/services/cycle_service.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -103,15 +103,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Future<void> _loadLanguage() async {
-    final prefs = await SharedPreferences.getInstance();
+    final language = await SecureSessionService.getLanguage();
     setState(() {
-      _selectedLanguage = prefs.getString('language') ?? 'en';
+      _selectedLanguage = language ?? 'en';
     });
   }
 
   Future<void> _setLanguage(String languageCode) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('language', languageCode);
+    await SecureSessionService.saveLanguage(languageCode);
     setState(() {
       _selectedLanguage = languageCode;
     });

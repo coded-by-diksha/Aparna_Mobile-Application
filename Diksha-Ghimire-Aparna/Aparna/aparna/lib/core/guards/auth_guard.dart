@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../../presentation/screens/login.dart';
 import '../../presentation/screens/main_navigation_screen.dart';
 import '../../presentation/screens/admin/admin_dashboard.dart';
@@ -31,10 +30,9 @@ class _AuthGuardState extends State<AuthGuard> {
 
   Future<void> _checkAuthStatus() async {
     try {
-      final prefs = await SharedPreferences.getInstance();
       final isAuthenticated = await AuthService.isAuthenticated();
-      final role = prefs.getString('user_role');
-      final userName = prefs.getString('user_name');
+      final role = await AuthService.getUserRole();
+      final userName = await AuthService.getUserName();
 
       setState(() {
         _isAuthenticated = isAuthenticated;

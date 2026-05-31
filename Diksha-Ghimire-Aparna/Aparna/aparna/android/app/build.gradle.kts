@@ -15,6 +15,11 @@ val keystorePropertiesFile = rootProject.file("key.properties")
 if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(FileInputStream(keystorePropertiesFile))
 }
+val hasReleaseKeystore = keystorePropertiesFile.exists() &&
+    keystoreProperties["storeFile"] != null &&
+    keystoreProperties["storePassword"] != null &&
+    keystoreProperties["keyAlias"] != null &&
+    keystoreProperties["keyPassword"] != null
 dependencies {
   coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.4")
   implementation(platform("com.google.firebase:firebase-bom:34.8.0"))
@@ -49,17 +54,23 @@ android {
     }
 
     signingConfigs {
-        create("release") {
-            keyAlias = keystoreProperties["keyAlias"] as? String
-            keyPassword = keystoreProperties["keyPassword"] as? String
-            storeFile = keystoreProperties["storeFile"]?.let { file(it as String) }
-            storePassword = keystoreProperties["storePassword"] as? String
+        if (hasReleaseKeystore) {
+            create("release") {
+                keyAlias = keystoreProperties["keyAlias"] as? String
+                keyPassword = keystoreProperties["keyPassword"] as? String
+                storeFile = keystoreProperties["storeFile"]?.let { file(it as String) }
+                storePassword = keystoreProperties["storePassword"] as? String
+            }
         }
     }
 
     buildTypes {
         release {
-            signingConfig = signingConfigs.getByName("release")
+            signingConfig = if (hasReleaseKeystore) {
+                signingConfigs.getByName("release")
+            } else {
+                signingConfigs.getByName("debug")
+            }
         }
     }
 }

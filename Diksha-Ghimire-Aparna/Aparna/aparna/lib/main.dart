@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:aparna/core/di/dependency_injection.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:aparna/l10n/app_localizations.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -48,8 +47,7 @@ void main() async {
     print('Running on Web: Firebase Messaging bypassed');
   }
 
-  final prefs = await SharedPreferences.getInstance();
-  final String languageCode = prefs.getString('language') ?? 'en';
+  final String languageCode = await SecureSessionService.getLanguage() ?? 'en';
   
   runApp(MultiBlocProvider(
     providers: DependencyInjection.getBlocProviders(),
@@ -427,8 +425,7 @@ class Main extends StatelessWidget {
   }
 
   void _setLanguage(BuildContext context, String code) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('language', code);
+    await SecureSessionService.saveLanguage(code);
     if (context.mounted) {
       MyApp.setLocale(context, Locale(code));
       Navigator.pop(context);
